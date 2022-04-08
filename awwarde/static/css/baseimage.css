@@ -47,7 +47,6 @@ li a {
     background-repeat: no-repeat;
     background-size: cover;
     width: auto;
-    color: white;
     text-align: center;
     font-weight: bold;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -79,4 +78,6 @@ li a {
     position: relative;
     top: 90px;
     font-size: xx-large;
+    text-shadow: 5px 5px;
+    color: white;
 }
