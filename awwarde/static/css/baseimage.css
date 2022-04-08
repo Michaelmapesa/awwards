@@ -1,0 +1,82 @@
+a{
+ color:#003366;
+}
+    
+body{
+ background-color:#ebebde;
+}
+
+    
+#victor{
+   font-family: 'Grand Hotel', cursive;
+   font-size: 30px;
+    
+    
+}
+    
+    
+li {
+        
+    display: block;
+ }
+    
+    
+li a {
+    
+    padding: 20px;
+    
+ }
+    
+#footer1 li{
+    padding: 10px;
+    
+    font-size: 10px;
+    
+    
+}
+#list{
+    display: flex;
+    
+}
+#image1{
+    display: block;
+}
+#none{
+    background-image: url("	https://i.pinimg.com/originals/4d/9d/3f/4d9d3f0f71a32bdd3d19d0b572bab2c1.jpg");
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: auto;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    
+}
+#login{
+    background-color: white;
+    width: 500px;
+    height: 500px;
+    position: relative;
+    top: 30px;
+    border: 5px solid white;
+}
+#register{
+    background-color: white;
+    border: 2px solid white;
+    width: 500px;
+    height: 750px;
+    position: relative;
+    top: 10px;
+
+}
+#search{
+    position: relative;
+
+
+}
+#welcome{
+    position: relative;
+    top: 90px;
+    font-size: xx-large;
+}
