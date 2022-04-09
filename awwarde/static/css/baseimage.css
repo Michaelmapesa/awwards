@@ -79,11 +79,18 @@ li a {
     position: relative;
     top: 90px;
     font-size: xx-large;
-    text-shadow: 5px 5px;
+    text-shadow: 3px 3px;
     color: orange;
 }
-.navbar-brand{
+#awward{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: orange;
+    text-shadow: 2px 2px;
+
+
+}
+#mynavbar{
+    position: relative;
+    left: 150px;
 
 }
