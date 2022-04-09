@@ -59,6 +59,7 @@ li a {
     position: relative;
     top: 30px;
     border: 5px solid white;
+    
 }
 #register{
     background-color: white;
@@ -79,5 +80,10 @@ li a {
     top: 90px;
     font-size: xx-large;
     text-shadow: 5px 5px;
-    color: white;
+    color: orange;
+}
+.navbar-brand{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: orange;
+
 }
