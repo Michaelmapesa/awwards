@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'awwarde',
     'crispy_forms',
     'bootstrap4',
-    'rest_framework'
+    'rest_framework',
+    'django_registration'
 ]
 
 MIDDLEWARE = [
