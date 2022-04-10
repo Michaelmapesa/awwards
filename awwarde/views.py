@@ -12,24 +12,26 @@ from .models import Profile, Post, Rating
 import random
 
 def index(request):
-    #  if request.method == "POST":
+    # if request.method == "POST":
     #     form = PostForm(request.POST)
     #     if form.is_valid():
     #         post = form.save(commit=False)
     #         post.user = request.user
     #         post.save()
-    #  else:
+    # else:
     #     form = PostForm()
 
-    #  try:
+    # try:
     #     posts = Post.objects.all()
     #     posts = posts[::-1]
     #     a_post = random.randint(0, len(posts)-1)
     #     random_post = posts[a_post]
     #     print(random_post.photo)
-    #  except Post.DoesNotExist:
+    # except Post.DoesNotExist:
     #     posts = None
-     return render(request, 'index.html')
+        return render(request, 'index.html')
+    
+
 
     
 
@@ -55,7 +57,7 @@ def login_request(request):
 			if user is not None:
 				login(request, user)
 				messages.info(request, f"You are now logged in as {username}.")
-				return redirect("main:homepage")
+				return redirect("homepage")
 			else:
 				messages.error(request,"Invalid username or password.")
 		else:
@@ -66,9 +68,9 @@ def login_request(request):
 def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
-	return redirect("homepage")
+	return redirect("/login")
 
-@login_required(login_url='login')
+
 def profile(request, username):
     return render(request, 'profile.html')
 
