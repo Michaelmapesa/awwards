@@ -1,0 +1,104 @@
+
+  
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+{{block.super}}
+<script src="{% static 'js/rating.js' %}"></script>
+
+<style>
+  .top-flex{
+    display: flex;
+  }
+  .date{
+    float: right;
+  }
+  #rating{
+    display: none;
+  }
+  .voter_profiles{
+    display: flex;
+  }
+  .move_right{
+    float: right;
+  }
+
+</style>
+
+<div class="container-fluid mt-3 pt-3 ml-3 pl-3">
+  <div class="row">
+    <h6>Nominees / <strong>{{project.title}} - Launch Page </strong>from <strong>{{project.user.profile.nationality}}</strong> </h6>
+  </div>
+</div>
+
+<div class="container mt-3 pt-3">
+<div class="card">
+  <img src="{{project.landing_page.url}}" alt="" class="card-img-top" id="img">
+  <button class="btn btn-outline-info" id="btnShow">Vote Now</button>
+  <input type="hidden" value="{{project.id}}" class="projectId" >
+  <div class="form-group ml-2 pl-2" id="rating">
+    <form action="" method="post" id="rateForm">
+      {% csrf_token %}
+      {{rate_form|crispy }}
+      <div class="form-group">
+        <input type="submit" class="btn btn-outline btn-info" value="Submit" id="submit">
+      </div>
+    </form>
+  </div>
+  <div class="card-body">
+    <div class="top-flex">
+      <h5><strong>{{project.title}} - Launch Page</strong></h5>
+      <p class="date">{{project.posted_on|timesince}}</p>
+    </div>
+    <p>by {{project.user.username}} ({{project.user.profile.nationality}})</p>
+    <p>{{project.description}}</p>
+    <div class="align">
+      {% if tags.all %}
+      {% for tag in tags.all %}
+      <a href="#"><button class="btn btn-success btn-sm">{{tag}}</button></a>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  </div>
+  <div class="row">
+  <div class="col-md-12">
+    <h2 class="project-details-heading">Ratings</h2><hr>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">User</th>
+                <th scope="col">Design</th>
+                <th scope="col">Usability</th>
+                <th scope="col">creativity</th>
+                <th scope="col">Content</th>
+                <th scope="col">vote_average</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% if project.all_voters %}
+          {% for voter in project.all_voters %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><img src="{{ voter.user.profile.profile_pic.url }}" alt="profile picture" class="rounded-circle custom-display border border-danger" height="55" width="55">{{voter.user.username}}</td>
+                <td>{{voter.design}}</td>
+                <td>{{voter.usability}}</td>
+                <td>{{voter.creativity}}</td>
+                <td>{{voter.content}}</td>
+                <td>{{voter.vote_average}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+
+
+{% endblock %}

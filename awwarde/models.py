@@ -65,7 +65,7 @@ class Profile(models.Model):
   bio = models.TextField()
   user = models.OneToOneField(User,on_delete=models.CASCADE)
   phone_number = models.IntegerField(default='0700000000')
-  nationality = models.CharField(max_length=40)
+  nationality = models.CharField(max_length=40, null=True)
 
   @receiver(post_save,sender = User)
   def create_profile(instance,sender,created,**kwargs):
@@ -88,13 +88,13 @@ class Profile(models.Model):
 
 
 class Rating(models.Model):
-  project = models.ForeignKey(Project,on_delete = models.CASCADE,related_name='project_rating')
-  user = models.ForeignKey(User,on_delete = models.CASCADE,related_name='person_rating')
+  project = models.ForeignKey(Project,on_delete = models.CASCADE,related_name='project_rating',null=True)
+  user = models.ForeignKey(User,on_delete = models.CASCADE,related_name='person_rating',null=True)
   design = models.IntegerField(choices=[(i,i) for i in range(1,10)])
   usability = models.IntegerField(choices=[(i,i) for i in range(1,10)])
-  creativity = models.IntegerField(choices=[(i,i) for i in range(1,10)])
+  creativity = models.IntegerField(null=True,choices=[(i,i) for i in range(1,10)])
   content = models.IntegerField(choices=[(i,i) for i in range(1,10)])
-  vote_average = models.IntegerField(choices=[(i,i) for i in range(1,10)])
+  vote_average = models.IntegerField(choices=[(i,i) for i in range(1,10)],null=True)
 
   def user_average(design,usability,creativity,content):
     summation = int(design)+int(usability)+int(creativity)+int(content)
