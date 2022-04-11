@@ -1,24 +1,47 @@
 from rest_framework import serializers
-from .models import Profile, Post
+from .models import Project,Tag,Technology,Rating,Profile
 from django.contrib.auth.models import User
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['name', 'profile_picture', 'bio', 'location', 'contact']
+class TagSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Tag
+    fields = ['name']
 
-
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = ['id', 'title', 'url', 'description', 'technologies', 'photo', 'date', 'user']
-
+class TechnologySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Technology
+    fields = ['name']
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(read_only=True)
-    posts = PostSerializer(many=True, read_only=True)
+  class Meta:
+    model = User
+    fields = ['username']
 
-    class Meta:
-        model = User
-        fields = ['id', 'url', 'username', 'profile', 'posts']
+class RatingSerializer(serializers.ModelSerializer):
+  user = UserSerializer(read_only=True)
+  class Meta:
+    model = Rating
+    fields = ['user','design','usability','creativity','content','vote_average']
+
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+  tag = TagSerializer(many=True,read_only=True)
+  technologies = TechnologySerializer(many=True,read_only=True)
+  person_rating = UserSerializer(read_only=True)
+  project_rating = RatingSerializer(many=True,read_only=True)
+  class Meta:
+    model = Project
+    fields = ['title','description','live_link','tag','landing_page','posted_on','category','technologies','Collaborators','person_rating','project_rating']
+
+
+
+    # Profile api secction
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+  user = UserSerializer(read_only=True)
+  class Meta:
+    model = Profile
+    fields = ['user','profile_pic','bio','nationality']

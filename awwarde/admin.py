@@ -1,7 +1,8 @@
-
 from django.contrib import admin
-from . import models
+from .models import Rating,Tag,Technology,Profile,Project
 
-admin.site.register(models.Profile)
-admin.site.register(models.Post)
-admin.site.register(models.Rating)
+admin.site.register(Profile)
+admin.site.register(Rating)
+admin.site.register(Project)
+admin.site.register(Technology)
+admin.site.register(Tag)
