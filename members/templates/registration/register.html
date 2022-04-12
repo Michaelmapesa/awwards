@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Register - Awwwards</title>
+<link rel="stylesheet" href=" {% static 'css/auth.css' %} ">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="auth">
+    <img src="{% static 'img/bg-register.jpg' %} " alt="Register bg" class="auth__bg">
+
+
+    <div class="auth__box">
+        <h3 class="heading-3">Register</h3>
+
+        <form method="POST" action="" class="auth__form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn auth__btn">Register</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
