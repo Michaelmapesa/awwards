@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href=" {% static 'css/style.css' %} ">
+
+    {% block title %}
+
+
+    {% endblock %}
+</head>
+
+<body>
+    <div id="conatiner">
+        <header class="header">
+            <div class="box-left">
+                <span class="menu">
+                    <svg class="icon icon--menu ">
+                        <use xlink:href="{%static 'img/sprite.svg'%}#menu-svgrepo-com">
+                        </use>
+                    </svg>
+                    <p class="menu-text">
+                        MENU
+                    </p>
+                </span>
+
+            </div>
+
+            <div class="box-right">
+
+                <svg class="icon--search">
+                    <use xlink:href="{%static 'img/sprite.svg'%}#search">
+                    </use>
+                </svg>
+
+                <a href="{% url 'home' %} " class=" icon--logo">
+                    <svg>
+                        <use xlink:href="{%static 'img/sprite.svg'%}#awwwards-long">
+                        </use>
+                    </svg>
+                </a>
+
+                {% if user.is_authenticated %}
+
+                <a href="{% url 'profile' pk=user.id %}" class="nav-profile">
+                    <h4 class="nav-profile__name">
+                        {{user.username}}
+                    </h4>
+
+                    <img src="{% static 'img/profile.svg' %} " alt="Profile-img"
+                        class="nav-profile__img">
+
+                </a>
+
+
+                {% else %}
+                <div class="nav-auth">
+                    <a href="{% url 'register' %}"> Register /</a>
+                    <a href="{% url 'login' %}">Login</a>
+                </div>
+
+                {% endif %}
+
+                <a href="{% url 'submit_project' %} " class="btn btn--submit">Submit your
+                    site!</a>
+            </div>
+
+
+        </header>
+
+        <main class="main">
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+        <footer class="footer">
+
+            <a href="/logout" class="btn btn--logout">
+                <img src=" {% static 'img/shutdown.svg' %}  " alt="">
+                Logout
+            </a>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

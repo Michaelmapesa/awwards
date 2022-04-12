@@ -1,27 +1,37 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile,Project,Rating
+
+from .views import *
 
 
-class RegistrationForm(UserCreationForm):
-  email = forms.EmailField()
+from .models import *
 
-  class Meta:
-    model = User
-    fields = ['username','email','password1','password2']
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+    bio = forms.CharField() 
 
-class PostProjectsForm(forms.ModelForm):
-  class Meta:
-    model = Project
-    exclude = ['user']
-    widgets = {
-      'tag': forms.CheckboxSelectMultiple(),
-      'technologies':forms.CheckboxSelectMultiple()
-    }
+    class Meta:
+        model = User
+        fields = ['username','email']
 
-
-class ProjectRatingForm(forms.ModelForm):
-  class Meta:
-    model = Rating
-    exclude = ['user','project','vote_average']
+class ProfileUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = Profile
+        fields = ['image','bio']
+        
+class ProjectForm(forms.ModelForm):
+    
+    class Meta:
+        model = ProjectList
+        exclude =['author','profile','like','comments']        
+        
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = Ratings
+        design_rating = forms.IntegerField()
+        usability_rating = forms.IntegerField()
+        content_rating = forms.IntegerField()
+        comment = forms.CharField(widget=forms.Textarea(attrs={"class": "form-control","placeholder": "Leave a comment"}))    
+        exclude =['project','author']    

@@ -1,27 +1,28 @@
-from django.urls import path,re_path
-from . import views as main_views
+from django.urls import path
+from .import views
+
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views
-from rest_framework.authtoken import models
+
 
 urlpatterns = [
-  path('home',main_views.home,name='home'),
-  path('',main_views.register,name='register'),
-  path('login/',auth_views.LoginView.as_view(template_name = 'auth/login.html'),name = 'login'),
-  path('logout/',auth_views.LogoutView.as_view(template_name = 'auth/logout.html'),name='logout'),
-  path('submission',main_views.submit,name='submissions'),
-  path('postform/',main_views.post_project, name='postform'),
-  path('profile/',main_views.profile, name='profile'),
-  re_path(r'^vote/(?P<project_id>\d+)$',main_views.vote, name='vote'),
-  re_path(r'^rating/data/(?P<project_id>\d+)$',main_views.rate,name='rate'),
-  re_path(r'^search/$',main_views.search,name='search'),
-  re_path(r'^api/projects/$', main_views.ProjectList.as_view()),
-  re_path(r'^api/profiles/$', main_views.ProfileList.as_view()),
-  path('developers/',main_views.developers, name='developers'),
+    path('register/', views.UserRegisterView.as_view(), name='register'),
+    path('', views.home, name='home'),
+    path('user/<pk>/', views.profile, name='profile'),
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('submit_project/', views.submit_project, name='submit_project'),
+    path('project/<pk>/', views.project_detail, name='project_detail'),
+    path('rate-project/<pk>', views.rate_project, name='rate_project'),
+    # Rest API endpoints
+    path('projects', views.ProjectViewSet.as_view(
+        {'get': 'list'}), name='projects'),
+    path('profiles/',
+         views.ProfileViewSet.as_view({'get': 'list'}), name='profiles'),
 ]
 
 if settings.DEBUG:
-  urlpatterns+= static(
-    settings.MEDIA_URL, document_root = settings.MEDIA_ROOT
-  )
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+else:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

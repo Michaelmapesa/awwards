@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Home - Awwwards</title>
+<link rel="stylesheet" href=" {% static 'css/projects.css' %} ">
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="projects">
+
+
+    {% for project in projects %}
+    <a href="{% url 'project_detail' pk=project.id %} " class="project">
+
+
+        <div class="project__bg">
+            <img src="{{image.project.url}}" alt="Project image" class="project__img">
+        </div>
+
+        <div class="project__info">
+            <h2 class="project__title">{{project.title}}</h2>
+            <p class="project__description"> {{project.description}} </p>
+            <span class="project__footer">
+                <img src="{{project.user.profile_pic.url}}" alt="User img">
+                <p>By {{project.user}} </p>
+            </span>
+        </div>
+
+    </a>
+    {% endfor %}
+
+
+    <script src="{% static 'js/script.js' %} "></script>
+</div>
+
+
+{% endblock %}

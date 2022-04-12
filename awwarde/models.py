@@ -1,105 +1,46 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime as dt
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 
-class Tag(models.Model):
-  name = models.CharField(max_length=20)
-  
-
-  @property
-  def all_tags(self):
-    return self.tags.all()
-
-  def __str__(self):
-    return "%s tag"%self.name
-
-class Technology(models.Model):
-  name = models.CharField(max_length=40)
-
-  def __str__(self):
-    return "%s tech"%self.name
-
-
-class Project(models.Model):
-  title = models.CharField(max_length=60)
-  landing_page = models.ImageField(upload_to='uploads/')
-  description = models.TextField()
-  live_link = models.TextField()
-  tag = models.ManyToManyField(Tag,related_name='tags')
-  posted_on = models.DateTimeField(auto_now_add=True)
-  category = models.CharField(max_length=50,blank=True)
-  technologies = models.ManyToManyField(Technology,related_name='technologies')
-  Collaborators = models.CharField(max_length=100,blank=True)
-  user = models.ForeignKey(User,on_delete=models.CASCADE)
-  
-
-  @classmethod
-  def query_all(cls):
-    return cls.objects.all()
-
-  @classmethod
-  def get_project(cls,project_id):
-    project = cls.objects.get(pk = project_id)
-    return project
-
-  @property
-  def all_voters(self):
-    return self.project_rating.all()
-
-  @classmethod
-  def search_by_title(cls,search_term):
-    projects = cls.objects.filter(title__icontains = search_term)
-    return projects
-
-
-
-  def __str__(self):
-    return "%s project"%self.title
+# Create your models here.
 
 
 class Profile(models.Model):
-  profile_pic = models.ImageField(default='default.jpg',upload_to='profile/')
-  bio = models.TextField()
-  user = models.OneToOneField(User,on_delete=models.CASCADE)
-  phone_number = models.IntegerField(default='0700000000')
-  nationality = models.CharField(max_length=40, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_pic = models.ImageField(
+        upload_to='profile_pics', default='profile_pics/default.svg')
 
-  @receiver(post_save,sender = User)
-  def create_profile(instance,sender,created,**kwargs):
-    if created:
-      Profile.objects.create(user = instance)
+    bio = models.TextField(blank=True)
 
-  @receiver(post_save,sender = User)
-  def save_profile(sender,instance,**kwargs):
-    instance.profile.save()
+    def save_user(self):
+        self.save()
+
+    def __str__(self):
+        return self.user.username
 
 
-  @classmethod
-  def get_user_profile(cls,user_id):
-    profile = cls.objects.get(pk=user_id)
-    return profile
+class Project(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    link = models.CharField(max_length=100,null=True)
+    image = models.ImageField(upload_to='projects',null=True)
+    date_posted = models.DateTimeField(auto_now_add=True, null=True)
+    category = models.CharField(max_length=100)
+    rating = models.DecimalField(default=0, decimal_places=1, max_digits=3)
 
+    def save_project(self):
+        self.save()
 
-  def __str__(self):
-    return "%s profile"%self.user
+    def delete_project(self):
+        self.delete()
 
+    @classmethod
+    def get_projects(cls):
+        projects = cls.objects.all()
+        return projects
 
-class Rating(models.Model):
-  project = models.ForeignKey(Project,on_delete = models.CASCADE,related_name='project_rating',null=True)
-  user = models.ForeignKey(User,on_delete = models.CASCADE,related_name='person_rating',null=True)
-  design = models.IntegerField(choices=[(i,i) for i in range(1,10)])
-  usability = models.IntegerField(choices=[(i,i) for i in range(1,10)])
-  creativity = models.IntegerField(null=True,choices=[(i,i) for i in range(1,10)])
-  content = models.IntegerField(choices=[(i,i) for i in range(1,10)])
-  vote_average = models.IntegerField(choices=[(i,i) for i in range(1,10)],null=True)
-
-  def user_average(design,usability,creativity,content):
-    summation = int(design)+int(usability)+int(creativity)+int(content)
-    average = summation/4
-    return average
-
-  def __str__(self):
-    return "%s rate"%self.project
+    @classmethod
+    def search_projects(cls, search_term):
+        projects = cls.objects.filter(title__icontains=search_term)
+        return projects

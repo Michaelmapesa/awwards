@@ -1,0 +1,67 @@
+.header,
+.footer {
+  display: none;
+}
+
+.auth {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-grey);
+}
+
+.auth__bg {
+  width: 50%;
+  height: 100%;
+}
+
+.auth__box {
+  width: 40%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.auth__form label {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.auth__form p {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth__form span {
+  /* Extra info from django auth */
+  display: none;
+}
+
+.auth__form input {
+  padding: 1.5rem;
+  outline: none;
+  font-size: 2rem;
+
+  border: 1px solid #dbe0df;
+}
+
+.auth__form:focus,
+.auth__form:active {
+  border: none;
+  background-color: #dbe0df;
+}
+
+.auth__btn {
+  font-size: 2rem;
+  width: 100%;
+  margin: 2rem auto;
+  color: var(--color-white);
+  background-color: var(--color-primary-1);
+
+  transform: all 0.5s;
+}
+
+.auth__btn:hover {
+  background-color: var(--color-primary-2);
+}

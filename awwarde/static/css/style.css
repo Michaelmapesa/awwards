@@ -1,0 +1,225 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  font-family: sans-serif;
+}
+
+:root {
+  --color-primary-1: #49c5b6;
+  --color-primary-2: #42ab9e;
+  --color-black-1: #202121;
+  --color-black-2: rgba(32, 33, 33, 0.902);
+  --color-white: #ffffff;
+  --color-grey: #f4f7f6;
+}
+
+.btn {
+  border: none;
+  padding: 1.5rem;
+  height: 100%;
+  color: var(--color-white);
+  background-color: var(--color-black-1);
+  text-decoration: none;
+
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--color-black-2);
+}
+
+.icon {
+  height: 2.2rem;
+  width: 2.3rem;
+}
+
+#container {
+  background-color: var(--color-grey);
+}
+
+.header {
+  display: flex;
+  height: 6rem;
+  background-color: var(--color-white);
+}
+
+.menu {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 9rem;
+  display: flex;
+}
+
+.box-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-left: 1px solid var(--color-black-2);
+}
+
+.icon--search {
+  height: 2rem;
+  width: 2rem;
+  margin-left: 1rem;
+}
+
+.icon--logo {
+  margin: 0 auto;
+}
+
+.icon--logo svg {
+  height: 2rem;
+}
+
+.nav-auth {
+  margin-right: 2rem;
+}
+
+.nav-auth a {
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-black-1);
+
+  transition: all 0.3s;
+}
+
+.nav-auth a:hover {
+  color: #64686a;
+}
+
+.nav-profile {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+  text-decoration: none;
+  color: var(--color-black-1);
+}
+
+.nav-profile__name {
+  font-size: 1.8rem;
+  margin-right: 1rem;
+  font-family: "apercu", sans-serif;
+}
+
+.btn--submit {
+  text-decoration: none;
+
+  /* Bring text to the center */
+  display: flex;
+  align-items: center;
+}
+
+.main {
+  min-height: 90vh;
+}
+
+/* Project form */
+.form--project {
+  display: flex;
+  flex-direction: column;
+
+  width: 40%;
+  margin: 0 auto;
+  min-height: 80vh;
+}
+
+.form--project input,
+.form--project textarea {
+  padding: 0.5rem 1rem;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.158);
+  background-color: var(--color-grey);
+}
+
+/* Image input to NOT have a border */
+#form--project__img {
+  border: none;
+  background-color: #fff;
+}
+
+.form--project input:active,
+.form--project input:focus,
+.form--project textarea:active,
+.form--project textarea:focus {
+  outline: none;
+}
+
+.form--project button {
+  font-size: 2rem;
+}
+
+.btn--edit-profile {
+  margin-left: 2rem;
+}
+
+.footer {
+  position: relative;
+}
+
+.btn--logout {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+
+  display: flex;
+  align-items: center;
+  height: min-content;
+
+  transition: all 0.4s;
+}
+
+.btn--logout img {
+  height: 2.3rem;
+  margin-right: 1rem;
+}
+
+.btn--logout:hover {
+  color: rgba(255, 0, 0, 0.815);
+}
+
+.form--edit-profile {
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+  margin: 2rem auto;
+  height: 30rem;
+  font-size: 1.7rem;
+}
+
+.form--edit-profile h4 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.form--edit-profile input,
+.form--edit-profile textarea {
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.form--edit-profile button {
+  height: min-content;
+  width: min-content;
+  margin: 0 auto;
+  font-size: 1.8rem;
+}

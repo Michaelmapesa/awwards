@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+
+
+{% if title %}
+<title>{{ title }} - Awwwards</title>
+{% else %}
+<title>Awwwards</title>
+{% endif %}
+
+<link rel="stylesheet" href=" {% static 'css/projects.css' %} ">
+{% endblock %}
+
+{% block content %}
+
+
+<h1>{{profile.username}}</h1>
+<a href="{% url 'edit_profile' %} " class="btn btn--edit-profile">Edit profile</a>
+
+
+<div class="projects">
+
+    {% for project in projects %}
+    <a href="{% url 'project_detail' pk=project.id %} " class="project">
+
+
+        <div class="project__bg">
+            <img src="{{project.image.url}}" alt="Project image" class="project__img">
+        </div>
+
+        <div class="project__info">
+            <h2 class="project__title">{{project.title}}</h2>
+            <p class="project__description"> {{project.description}} </p>
+            <span class="project__footer">
+                <img src="{{project.user.profile_pic.url}}" alt="User img">
+                <p>By {{project.user}} </p>
+            </span>
+        </div>
+
+    </a>
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}

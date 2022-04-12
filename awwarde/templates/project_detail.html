@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+
+
+{% if title %}
+<title>{{ title }} - Awwwards</title>
+
+{% else %}
+<title>Awwwards</title>
+{% endif %}
+
+<link rel="stylesheet" href=" {% static 'css/projects.css' %} ">
+{% endblock %}
+
+{% block content %}
+
+<div class="project-det">
+    <div class="project-det__bg">
+        <img src="{{project.image.url}} " alt="Project image" class="project-det__img">
+    </div>
+    <div class="project-det__info">
+        <div class="project-det__rating">
+            {% csrf_token %}
+            <div class="rating">
+                <h4 class="heading-4">Design</h4>
+                <span class="design">
+                </span>
+            </div>
+
+            <div class="rating">
+                <h4 class="heading-4">Usability</h4>
+                <span class="usability">
+                </span>
+            </div>
+
+            <div class="rating">
+                <h4 class="heading-4">Content</h4>
+                <span class="content">
+                </span>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <span class="project-det__score">
+
+        {{project.rating}}
+    </span>
+    <script>
+
+
+        // add rating stars to the page
+        let svgRaw = `
+        <svg class="icon--rating">
+            <use xlink:href="{%static 'img/sprite.svg'%}#star">
+            </use>
+        </svg>`
+
+        const ratingDesign = document.querySelector('.design');
+        const ratingUsability = document.querySelector('.usability');
+        const ratingContent = document.querySelector('.content');
+
+
+
+        //Add 5 stars to each category
+        for (let step = 0; step < 5; step++) {
+            ratingDesign.insertAdjacentHTML('beforeend', svgRaw);
+            ratingUsability.insertAdjacentHTML('beforeend', svgRaw);
+            ratingContent.insertAdjacentHTML('beforeend', svgRaw);
+        }
+
+        designIcons = ratingDesign.querySelectorAll('.icon--rating');
+        usabilityIcons = ratingUsability.querySelectorAll('.icon--rating');
+        contentIcons = ratingContent.querySelectorAll('.icon--rating');
+
+        //Utility function to set the rating
+        var slice = function (elements, start, end) {
+            var sliced = Array.prototype.slice.call(elements, start, end);
+            return sliced;
+        }
+
+
+
+        //Set the rating
+
+
+        const sumRating = function () {
+            console.log(designRating + usabilityRating + contentRating);
+        }
+
+        let designRating = 0
+        let usabilityRating = 0
+        let contentRating = 0
+        let overallRating = 0
+
+
+        const projectRating = document.querySelector('.project-det__score');
+        const styleIcons = function (iconList) {
+            iconList.forEach((icon, index) => {
+                icon.addEventListener('click', () => {
+                    //remove all the stars
+                    iconList.forEach(icon => icon.classList.remove('icon--active'));
+
+                    let rated = slice(iconList, 0, index + 1);
+                    rated.forEach(icon => icon.classList.add('icon--active'));
+
+
+                    //assing the rating
+                    let rating = index + 1;
+
+                    //check rating category
+                    if (iconList == designIcons) {
+                        designRating = rating
+                    } else if (iconList == usabilityIcons) {
+                        usabilityRating = rating
+                    } else if (iconList == contentIcons) {
+                        contentRating = rating
+                    }
+
+                    overallRating = (((designRating + usabilityRating + contentRating) / 3) * 2).toFixed(1);
+                    projectRating.innerHTML = overallRating;
+                    updateDatabase(overallRating);
+
+                });
+            })
+
+        }
+
+        styleIcons(designIcons);
+        styleIcons(usabilityIcons);
+        styleIcons(contentIcons);
+
+
+        const updateDatabase = function (rating) {
+            const id = '{{project.id}}'
+            console.log('{{csrf_token}}');
+
+            fetch(`/rate-project/${id}`, {
+                // Adding method type
+                method: "POST",
+
+                // Adding body or contents to send
+                body: JSON.stringify({
+                    pk: id,
+                    rating: rating,
+                }),
+
+                // Adding headers to the request
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "X-CSRFToken": '{{csrf_token}}'
+                },
+            })
+
+        }
+
+
+
+
+    </script>
+</div>
+
+
+{% endblock %}
