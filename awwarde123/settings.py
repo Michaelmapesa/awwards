@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'awwarde123.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ipp3',
+        'NAME': 'ward',
         'USER': 'moringaaccess',
         'PASSWORD':'access',
     }
